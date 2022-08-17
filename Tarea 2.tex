@@ -30,43 +30,43 @@ Total puntos: 10 puntos\\
 \end{minipage}
     
 \section*{Introducción}
-Condicion de carrera
+El objetivo de este ataque es aprovechar la vulnerabilidad existente en la velocidad en la que son ejecutados los procesos utilizando un archivo que posee el máximo nivel de permisos (root) al mismo tiempo ejecutado un un archivo que posee permisos de un usuario normal, hoy en día esta vulnerabilidad ya se encuentra cubierta aun así si este método de protección puede ser desactivado de manera manual, si el usuario administrador lo decide y deja esta ventana abierta para los diferentes atacantes.
 
 \section*{Instrucciones Generales}
 
+Para este ataque es necesario un archivo con permisos de root el cual sera vulp, el cual puede ser utilizado por cualquier usuario en el equipo sin importar los permisos de cada usuario, luego debemos ubicarnos en un usuario que no posea los permisos de administrador (root) para ejecutar nuestro script y al mismo tiempo utilizar vulp para intentar escribir en un archivo de acceso exclusivo para root.
+
 \begin{enumerate}
-  \item 
-  \item 
-  \item 
-  \item 
-  \item 
-  \item 
+  \item Deshabilitar la bandera del sistema que bloquea este tipos de ataque con el comando: "sudo sysctl -w fs.protected\_symlinks=1"
+  \item Debemos seleccionar cual archivo debemos atacar en este caso seria Shadow o Passwd. (Nosotros realizamos el ataque a ambos para verificar la funcionalidad)
+  
+  \item Luego debemos crear un archivo de texto donde guardaremos el string que deseamos inyectar en alguno de los archivos atacado
+  \item Luego de definir el nombre del archivo de texto debemos modificarlo en el archivo "target\_1.sh"
+  
+  \item Dentro del archivo de "pass\_input" que definimos ingresamos el valor de "hacker:U6aMy0wojraho:0:0::/home/hacker:/bin/bash"
+  
+  \item Cuando el ataque tiene éxito, puede ser prácticamente de inmediato o tomar algunos minutos pero este tendrá éxito en este escenario.
+  
+  \item Ingresamos al usuario inyectado por el ataque y una vez dentro del perfil inyectado dados los parámetros definidos por el ataque este usuario poseerá control total del equipo como un usuario "root"
   
 \end{enumerate}
 
 
 \section*{Descripción del Ataque}
 
-\tab El ataque de Vulnerabilidad de Condición de Carrera\\
+\tab Según Wikipedia la condición de carrera es algo que afecta electrónicos, software y otros sistemas que dependen de una secuencia de tiempo sobre eventos incontrolables esto se vuelve un error cuando uno o mas comportamientos se vuelven indeseables.
+\\
+
+La idea del ataque es hacerle pensar al equipo que el usuario root con el mayor nivel de permisos en el sistema desea realizar cambios sobre un archivo que solamente este usuario puede modificar cuando realmente es un usuario sin privilegios el cual desea obtener este nivel de permisos para modificar cualquier archivo o configuración del equipo dado un ataque satisfactorio.
 
 \\
 \\
-Según Wikipedia ...:
 
-\begin{enumerate}
-  \item  
-  \item 
-\end{enumerate}
 
-\begin{enumerate}
-
-  \item 
-  
-\end{enumerate}
 
 \section*{Documentación del Ataque}
 
-Videos de las ejecuciones y los ataques: \\
+Vídeos de las ejecuciones y los ataques: \\
 
 \begin{enumerate}
   \item Actividad 1:
@@ -95,22 +95,22 @@ Videos de las ejecuciones y los ataques: \\
 
 \begin{enumerate}
     \item Estado Final: Completado
-    \item Problemas Encontrados: ...
-    \item Limitaciones Adicionales: ...
+    \item Problemas Encontrados: Existencia de una bandera la cual bloquea estos tipos de ataques además de que al recompilar el archivo .c perdía los permisos de root, lo cual nos retrasaba en las pruebas y confirmación de los cambios realizados.
+    \item Limitaciones Adicionales: Falsos positivos, inicialmente ejecutamos los scripts con un usuario el cual poseía permisos de administrador o root por lo que el ataque se ejecutaba en la primera o segunda ejecución, además para realizar el ataque en las nuevas versiones debemos deshabilitar una bandera de seguridad descubrimos que luego de reiniciar el equipo virtual se reiniciaba la bandera por lo que sufrimos varios días sin saber que dado el reinicio el ataque no funcionaba.
     \item Reporte de Commits en Git: \href{https://github.com/varitomirandacr/SeguridadSO_RaceCondition/commits/main}{Commits History}
-    \item Evaluación: 100%
+    \item Evaluación: 100\%
 \end{enumerate}
 
     \noindent\rule{10cm}{0.4pt} \\
     Rubro   \qquad \qquad \qquad \qquad Puntaje Total    \qquad  Puntaje Obtenido \\
     \noindent\rule{10cm}{0.4pt} \\
-    Actividad 1: \qquad \qquad \qquad \qquad \ 25 \qquad \\ 
+    Actividad 1: \qquad \qquad \qquad \qquad \ 25 \qquad \qquad \qquad 25\\ 
     \noindent\rule{10cm}{0.1pt} \\
-    Actividad 2: \qquad \qquad \qquad \qquad \ 25 \qquad \\ 
+    Actividad 2: \qquad \qquad \qquad \qquad \ 25 \qquad \qquad \qquad 25\\ 
     \noindent\rule{10cm}{0.1pt} \\
-    Actividad 3: \qquad \qquad \qquad \qquad \ 25 \qquad \\ 
+    Actividad 3: \qquad \qquad \qquad \qquad \ 25 \qquad \qquad \qquad 25\\ 
     \noindent\rule{10cm}{0.1pt} \\
-    Documentación del Ataque: \quad \ \ 25 \qquad \\ 
+    Documentación del Ataque: \quad \ \ 25 \qquad \qquad \qquad 25\\ 
     \noindent\rule{10cm}{0.1pt} \\
 
 \section*{Lecciones Aprendidas}
@@ -136,6 +136,8 @@ Este proyecto de Vulnerabilidad de Condición de Carrera...:
   \item SEED Labs – Race Condition Vulnerability Lab. \href{https://seedsecuritylabs.org/Labs_16.04/PDF/Race_Condition_new.pdf}{Race Condition Vulnerability Lab}
   
   \item Race Condition Vulnerability \href{https://moodle1920.up.pt/pluginfile.php/132925/mod_resource/content/1/Race_Condition_Extra.pdf}{Race Condition Vulnerability}
+  
+  \item Race condition \href{https://en.wikipedia.org/wiki/Race_condition}{Race condition}
   
 \end{itemize}
 
