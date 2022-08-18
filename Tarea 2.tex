@@ -30,17 +30,18 @@ Total puntos: 10 puntos\\
 \end{minipage}
     
 \section*{Introducción}
-El objetivo de este ataque es aprovechar la vulnerabilidad existente en la velocidad en la que son ejecutados los procesos utilizando un archivo que posee el máximo nivel de permisos (root) al mismo tiempo ejecutado un un archivo que posee permisos de un usuario normal, hoy en día esta vulnerabilidad ya se encuentra cubierta aun así si este método de protección puede ser desactivado de manera manual, si el usuario administrador lo decide y deja esta ventana abierta para los diferentes atacantes.
+El objetivo de este ataque es aprovechar la vulnerabilidad existente de condición de carrera en la que son ejecutados los procesos utilizando un archivo que posee el máximo nivel de permisos (root) al mismo tiempo ejecutado un archivo que posee permisos de un usuario normal. Esto además se logra mediante el seteo de links simbólicos en el sistema, hoy en día esta vulnerabilidad ya se encuentra cubierta, aún así este método de protección puede ser desactivado de manera manual, si el usuario administrador lo decide y deja esta ventana abierta para los diferentes atacantes.
 
 \section*{Instrucciones Generales}
 
-Para este ataque es necesario un archivo con permisos de root el cual sera vulp, el cual puede ser utilizado por cualquier usuario en el equipo sin importar los permisos de cada usuario, luego debemos ubicarnos en un usuario que no posea los permisos de administrador (root) para ejecutar nuestro script y al mismo tiempo utilizar vulp para intentar escribir en un archivo de acceso exclusivo para root.
+Para este ataque es necesario un archivo con permisos de root el cual sera vulp, quien puede ser utilizado por cualquier usuario en el equipo sin importar los permisos de cada usuario, luego debemos ubicarnos en un usuario que no posea los permisos de administrador (root) para ejecutar nuestro script y al mismo tiempo utilizar vulp para intentar escribir en un archivo de acceso exclusivo para root.
 
 \begin{enumerate}
-  \item Deshabilitar la bandera del sistema que bloquea este tipos de ataque con el comando: "sudo sysctl -w fs.protected\_symlinks=1"
+  \item Deshabilitar la bandera del sistema que bloquea este tipos de ataque con el comando: "sudo sysctl -w fs.protected\_symlinks=0"
   \item Debemos seleccionar cual archivo debemos atacar en este caso seria Shadow o Passwd. (Nosotros realizamos el ataque a ambos para verificar la funcionalidad)
   
-  \item Luego debemos crear un archivo de texto donde guardaremos el string que deseamos inyectar en alguno de los archivos atacado
+  \item Luego debemos crear un archivo de texto donde guardaremos el string que deseamos inyectar en alguno de los archivos atacados. En nuestro caso son: pass\_input y shadow\_input
+  
   \item Luego de definir el nombre del archivo de texto debemos modificarlo en el archivo "target\_1.sh"
   
   \item Dentro del archivo de "pass\_input" que definimos ingresamos el valor de "hacker:U6aMy0wojraho:0:0::/home/hacker:/bin/bash"
@@ -49,15 +50,20 @@ Para este ataque es necesario un archivo con permisos de root el cual sera vulp,
   
   \item Ingresamos al usuario inyectado por el ataque y una vez dentro del perfil inyectado dados los parámetros definidos por el ataque este usuario poseerá control total del equipo como un usuario "root"
   
+  \item Teniendo control de la máquina con este usuario que se agregó, podemos modificar otros archivos manualmente y ejecutar cualquier optro script o modificar otro archivo que pertenezca a root como el shadow 
+  
 \end{enumerate}
 
 
 \section*{Descripción del Ataque}
 
-\tab Según Wikipedia la condición de carrera es algo que afecta electrónicos, software y otros sistemas que dependen de una secuencia de tiempo sobre eventos incontrolables esto se vuelve un error cuando uno o mas comportamientos se vuelven indeseables.
+\tab \qquad Según Wikipedia la condición de carrera es algo que afecta electrónicos, software y otros sistemas que dependen de una secuencia de tiempo sobre eventos incontrolables esto se vuelve un error cuando uno o mas comportamientos se vuelven indeseables.
 \\
 
-La idea del ataque es hacerle pensar al equipo que el usuario root con el mayor nivel de permisos en el sistema desea realizar cambios sobre un archivo que solamente este usuario puede modificar cuando realmente es un usuario sin privilegios el cual desea obtener este nivel de permisos para modificar cualquier archivo o configuración del equipo dado un ataque satisfactorio.
+La idea del ataque es hacerle pensar al equipo que el usuario root con el mayor nivel de permisos en el sistema desea realizar cambios sobre un archivo en específico. Mediante iteraciones infinitas se puede correr un script de manera constante y que solamente este usuario root pueda modificar el archivo cuando realmente es un usuario sin privilegios, esto se logra creando symbolic links que apunten a un archivo de sistema que pertenezca a root. 
+\\ 
+
+Lo que se busca es obtener un nivel de permisos de root para modificar cualquier archivo o configuración del equipo, una vez logrado este paso se puede tomar como un ataque satisfactorio.
 
 \\
 \\
@@ -115,14 +121,18 @@ Vídeos de las ejecuciones y los ataques: \\
 
 \section*{Lecciones Aprendidas}
 
-Este proyecto de Vulnerabilidad de Condición de Carrera...:
+Este proyecto de Vulnerabilidad de Condición de Carrera nos muestra lo vulnerable que eran los sistemas aun cuando teníamos diferentes capaz de seguridad, como por ejemplo discos encriptados, antivirus, puertos usb deshabilitados etc.
 
 \begin{enumerate}
-    \item     
-    \item     
-    \item     
-    \item 
-    \item 
+    \item En nuestro caso nos fue dado un archivo con código en C llamado vulp, que teníamos que compilar. Parte de la vulnerabilidad radica en ignorar algunos puntos de buenas prácticas que hubieran impedido el ataque. 
+    
+    \item Con respecto al escenario 2 logramos entender de que es necesario comprobar los archivos, su contenido, su integridad, en este caso fue especificamente con los i-nodes, sin embargo existen otras formas de comprobar archivos.
+    
+    \item En el caso del Least Privilege, entendemos la importancia de impedir que un usuario que no realiza la llamada logre ejecutar una operación, parte de esto representa el core de la vulnerabilidad de condición de carrera.
+    
+    \item Ningún archivo con acceso de root o información delicada o sensible deberia estar a la mano de un usuario que no tenga permisos de root o administrador, ya que puede sentar las bases para abrir una ventana para un posible ataque.
+    
+    \item Mantener los sistemas actualizados con las últimas actualizaciones de seguridad del sistema operativo, dado que este tipo de ataques se soluciona con una de las versiones posteriores al SO que utilizamos.
     
 \end{enumerate}
 
@@ -142,3 +152,4 @@ Este proyecto de Vulnerabilidad de Condición de Carrera...:
 \end{itemize}
 
 \end{document}
+
