@@ -3,7 +3,8 @@
 ## Videos:
 
 ### Actividad 1:
-- [Tarea 2 - Actividad 1 - Race Condition Vulnerability](https://www.loom.com/share/622ec72dc2cb4c658d06e8dee2589afd)
+- [Tarea 2 - Actividad 1.1 - Race Condition Vulnerability](https://www.loom.com/share/622ec72dc2cb4c658d06e8dee2589afd)
+- [Tarea 2 - Actividad 1.2 - Race Condition Vulnerability](https://www.loom.com/share/7ac21ee2b903425195a60f802dd6a9c9)
 
 ### Actividad 2:
 - [Tarea 2 - Actividad 2.1 - Race Condition Vulnerability](https://www.loom.com/share/36b82066d6d043168116ed0fc0b293b6)
