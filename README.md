@@ -6,7 +6,7 @@ Race Condition Vulnerability attack - Curso Principios de Seguridad en Sistemas 
 - Descripción:
 Proyecto de desarrollo de un ataque tipo "Race Condition Vulnerability"
 
-> Un ataque de “Race Condition Vulnerability” ....
+> El ataque esta dividido en tres diferentes actividades las cuales están contenidas en tres diferentes archivos zip
 
 - Integrantes:
     - Alvaro Andrei Miranda Muñoz - 2022438448
@@ -20,17 +20,5 @@ Proyecto de desarrollo de un ataque tipo "Race Condition Vulnerability"
         - HDD Encriptado/Cifrado  
 - Markdown
 - Versionamiento en Git
-
-## Como Correr el Ataque:
-
-> 
-
-## Actividades:
-
-### Actividad 1:
-
-### Actividad 2:
-
-### Actividad 3:
 
 
